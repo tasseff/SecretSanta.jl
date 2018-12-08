@@ -95,7 +95,7 @@ function send_email(ssm::SecretSantaModel, sender::Dict{String,Any}, recipient::
 
     body = "Date: $(datetime) +0000\n" *
            "From: Santa Claus <$(ssm.data["email"]["username"])>\n" *
-           "To: $(sender_email)\n" * "Subject: Julia Test\n" * "\n" *
+           "To: $(sender_email)\n" * "Subject: $(subject)\n" * "\n" *
            message * "\n"
 
     body_io = IOBuffer(body)
@@ -125,15 +125,16 @@ function print_matchings(ssm::SecretSantaModel, solution::Array{Tuple{String, St
     for matching in solution
         sender = findfirst(x -> x["email"] == matching[1], participants)
         recipient = findfirst(x -> x["email"] == matching[2], participants)
-        #print_matching(participants[sender], participants[recipient])
-        send_email(ssm, participants[sender], participants[recipient])
+        print_matching(participants[sender], participants[recipient])
+        #send_email(ssm, participants[sender], participants[recipient])
     end
 end
 
-function test(input_path::String)
+function check(input_path::String)
     ssm = build_model(input_path)
     solution = solve_model(ssm)
     print_matchings(ssm, solution)
+    return true
 end
 
 end
