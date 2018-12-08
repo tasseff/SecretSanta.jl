@@ -75,7 +75,7 @@ function solve_model(ssm::SecretSantaModel)
     end
 end
 
-function send_email(ssm::SecretSantaModel, sender::Dict{String,Any}, recipient::Dict{String,Any})
+function send_email(ssm::SecretSantaModel, sender::Dict{String,Any}, recipient::Dict{String,Any}, test::Bool = true)
     # Prepare the subject of the email.
     subject = ssm.data["email"]["subject"]
     recipient_name = recipient["name"]
@@ -102,39 +102,41 @@ function send_email(ssm::SecretSantaModel, sender::Dict{String,Any}, recipient::
 
     # Prepare email sending options.
     opt = SendOptions(isSSL = true, username = ssm.data["email"]["username"],
-                      passwd = ssm.data["email"]["password"], verbose = true)
+                      passwd = ssm.data["email"]["password"])
 
-    # Prepare and send the email.
+    # Prepare the email.
     server = ssm.data["email"]["smtp_server"]
     port = string(ssm.data["email"]["smtp_port"])
     url = "smtps://$(server):$(port)"
     rcpt = ["$(sender_email)"]
     from = "$(ssm.data["email"]["username"])"
-    resp = send(url, rcpt, from, body_io, opt)
+
+    if !test
+        # Send the email.
+        resp = send(url, rcpt, from, body_io, opt)
+    else
+        println("------------------------------------------------------------")
+        println("Message to $(sender_name) ($(sender_email))")
+        println("Subject: $(subject)")
+        println("$(message)")
+        println("------------------------------------------------------------")
+    end
 end
 
-function print_matching(sender::Dict{String,Any}, recipient::Dict{String,Any})
-    lhs = "$(sender["name"]) ($(sender["email"]))"
-    rhs = "$(recipient["name"]) ($(recipient["email"]))"
-    println("$(lhs) => $(rhs)")
-end
-
-function print_matchings(ssm::SecretSantaModel, solution::Array{Tuple{String, String}, 1})
+function send_matchings(ssm::SecretSantaModel, solution::Array{Tuple{String, String}, 1}, test::Bool = true)
     participants = ssm.data["participants"]
 
     for matching in solution
         sender = findfirst(x -> x["email"] == matching[1], participants)
         recipient = findfirst(x -> x["email"] == matching[2], participants)
-        print_matching(participants[sender], participants[recipient])
-        #send_email(ssm, participants[sender], participants[recipient])
+        send_email(ssm, participants[sender], participants[recipient], test)
     end
 end
 
-function check(input_path::String)
+function run(input_path::String, test::Bool = true)
     ssm = build_model(input_path)
     solution = solve_model(ssm)
-    print_matchings(ssm, solution)
-    return true
+    send_matchings(ssm, solution, test)
 end
 
 end

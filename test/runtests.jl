@@ -3,7 +3,7 @@ using Test
 
 @testset "SecretSanta" begin
     @testset "SecretSantaModel" begin
-        SecretSanta.check("../test/test.json")
-        @test true == true
+        SecretSanta.run("../test/test.json")
+        @test true
     end
 end

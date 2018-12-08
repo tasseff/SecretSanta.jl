@@ -43,5 +43,17 @@ The `participants` block defines information relevant to Secret Santa participan
 This is a participant entry for [Saint Nicholas](https://en.wikipedia.org/wiki/Saint_Nicholas), whose email is `olstnick@example.com`. This email serves as his unique identifier. The exclude field will prevent him from gifting [Arius](https://en.wikipedia.org/wiki/Arius), whose email is `lovedafather@example.com`. Other participant entries can be defined similarly.
 
 ### Performing a Test Run
+Performing a test run can be completed via the Julia interface, e.g.,
+```julia
+using SecretSanta
+SecretSanta.run("/path/to/input.json")
+```
 
 ### Sending the Emails
+Running can be completed via the Julia interface, e.g.,
+```julia
+using SecretSanta
+SecretSanta.run("/path/to/input.json", false)
+```
+Here, `false` indicates that the run is *not* a test.
+Note that matchings will be hidden from the user executing the command.

@@ -1,7 +1,7 @@
 {
     "email": {
         "smtp_server": "smtp.example.com",
-        "smtp_port": 587,
+        "smtp_port": 465,
         "username": "user@example.com",
         "password": "123456",
         "subject": "Your Secret Santa recipient is {recipient}!",
