@@ -6,7 +6,7 @@
 | :---------------: | :---------------: | :-------------------: |
 | ![ci-badge]       | ![ci-badge]       | ![cov-badge]          |
 
-[ci-badge]: https://travis-ci.org/lanl-ansi/SecretSanta.jl.svg?branch=master "Travis build status"
-[ci-link]: https://travis-ci.org/lanl-ansi/SecretSanta.jl "Travis build status"
-[cov-badge]: https://codecov.io/gh/lanl-ansi/SecretSanta.jl/branch/master/graph/badge.svg
-[cov-link]: https://codecov.io/gh/lanl-ansi/SecretSanta.jl
+[ci-badge]: https://travis-ci.com/tasseff/SecretSanta.jl.svg?branch=master "Travis build status"
+[ci-link]: https://travis-ci.com/tasseff/SecretSanta.jl "Travis build status"
+[cov-badge]: https://codecov.io/gh/tasseff/SecretSanta.jl/branch/master/graph/badge.svg
+[cov-link]: https://codecov.io/gh/tasseff/SecretSanta.jl
