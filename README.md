@@ -1,4 +1,5 @@
 # SecretSanta.jl
+SecretSanta.jl is a Julia package for generating Secret Santa matchings and emailing participants.
 
 ## Build status
 
@@ -13,7 +14,6 @@
 
 ## Usage
 ### JSON Schema
-SecretSanta.jl is a Julia package for generating Secret Santa matchings and emailing participants.
 Setup is controlled via a JSON document, an example of which can be found [here](test/test.json).
 First, email settings are controlled via the `email` block:
 ```json
