@@ -50,10 +50,10 @@ SecretSanta.run("/path/to/input.json")
 ```
 
 ### Sending the Emails
-Running can be completed via the Julia interface, e.g.,
+Performing a live run can be completed via the Julia interface, e.g.,
 ```julia
 using SecretSanta
 SecretSanta.run("/path/to/input.json", false)
 ```
 Here, `false` indicates that the run is *not* a test.
-Note that matchings will be hidden from the user executing the command.
+Note that matchings will be hidden from the user that executes the command.
