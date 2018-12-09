@@ -133,7 +133,7 @@ function send_matchings(ssm::SecretSantaModel, solution::Array{Tuple{String, Str
     end
 end
 
-function run(input_path::String, test::Bool = true)
+function run(input_path::String; test::Bool = true)
     ssm = build_model(input_path)
     solution = solve_model(ssm)
     send_matchings(ssm, solution, test)
