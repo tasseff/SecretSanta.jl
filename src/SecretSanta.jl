@@ -2,9 +2,10 @@ module SecretSanta
 
 using Combinatorics
 using Dates
-using GLPKMathProgInterface
+using GLPK
 using JSON
 using JuMP
+using MathOptInterface
 using Random
 using SMTPClient
 
@@ -34,23 +35,22 @@ function SecretSantaModel(data::Dict{String, Any})
     A = Random.shuffle(A)
 
     # Create the JuMP model.
-    model = Model(solver = GLPKSolverMIP(msg_lev = 0))
+    model = Model(with_optimizer(GLPK.Optimizer))
     variables = Dict{Symbol, Any}(:x => nothing)
     constraints = Dict{Symbol, Any}(:out_flow => nothing, :in_flow => nothing)
     constraints[:out_flow] = Dict{String, ConstraintRef}()
     constraints[:in_flow] = Dict{String, ConstraintRef}()
 
     # Create variables corresponding to arc selection.
-    variables[:x] = @variable(model, [a in A], lowerbound = 0, upperbound = 1,
-                              start = 0, category = :Cont, basename = "x")
+    variables[:x] = @variable(model, [a in A], binary=true, base_name = "x")
 
     for i in N
         out_arcs = collect(filter(x -> (x[1] == i), A))
-        out_vars = Array{JuMP.Variable}([variables[:x][a] for a in out_arcs])
+        out_vars = Array{JuMP.VariableRef}([variables[:x][a] for a in out_arcs])
         constraints[:out_flow][i] = @constraint(model, sum(out_vars) == 1)
 
         in_arcs = collect(filter(x -> (x[2] == i), A))
-        in_vars = Array{JuMP.Variable}([variables[:x][a] for a in in_arcs])
+        in_vars = Array{JuMP.VariableRef}([variables[:x][a] for a in in_arcs])
         constraints[:in_flow][i] = @constraint(model, sum(in_vars) == 1)
     end
 
@@ -65,11 +65,11 @@ function build_model(input_path::String)
 end
 
 function solve_model(ssm::SecretSantaModel)
-    status = JuMP.solve(ssm.model)
+    JuMP.optimize!(ssm.model)
 
-    if status == :Optimal
-        A = ssm.variables[:x].indexsets[1]
-        return filter(a -> isapprox(getvalue(ssm.variables[:x][a]), 1.0), A)
+    if JuMP.termination_status(ssm.model) == MathOptInterface.OPTIMAL
+        A = ssm.variables[:x].axes[1]
+        return filter(a -> isapprox(JuMP.value(ssm.variables[:x][a]), 1.0), A)
     else
         error("Secret Santa assignment is not possible. Adjust participants.")
     end
