@@ -1,20 +1,16 @@
-language:
-  - julia
-
+language: julia
 os:
   - linux
-
+  - osx
 julia:
   - 1.0
-  - 0.7
-
-cache:
-  directories:
-    - /home/travis/.julia
-
-before_install:
-  - julia -e '(VERSION >= v"1.0" && using Pkg); Pkg.rm("SecretSanta"); Pkg.rm("SecretSanta")'
-  - julia -e '(VERSION >= v"1.0" && using Pkg); Pkg.update()'
-
+  - 1.1
+  - nightly
+matrix:
+  allow_failures:
+    - julia: nightly
+script:
+  - julia --project -e 'import Pkg; Pkg.build(); Pkg.instantiate()'
+  - julia --project -e 'import Pkg; Pkg.test(coverage=true);'
 after_success:
-  - julia -e '(VERSION >= v"1.0" && using Pkg); Pkg.add("Coverage"); cd(Pkg.dir("SecretSanta")); using Coverage; Codecov.submit(process_folder())'
+  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
