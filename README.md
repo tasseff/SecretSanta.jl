@@ -52,13 +52,13 @@ Other participant entries can be defined similarly.
 Performing a test run can be completed via the Julia interface, e.g.,
 ```julia
 using SecretSanta
-SecretSanta.run("/path/to/input.json", test = true)
+SecretSanta.run("/path/to/input.json", test=true)
 ```
 
 ### Sending the Emails
 Performing a live run can be completed via the Julia interface, e.g.,
 ```julia
 using SecretSanta
-SecretSanta.run("/path/to/input.json", test = false)
+SecretSanta.run("/path/to/input.json", test=false)
 ```
 Note that matchings will be hidden from the user that executes the command.
