@@ -15,8 +15,13 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SMTPClient = "c35d69d1-b747-5018-a192-25bc5e63c83d"
 
 [compat]
-JuMP = "≥ 0.19.0"
-julia = "≥ 1.0.0"
+julia = "^1"
+Combinatorics = "^1"
+GLPK = "^0.12"
+JuMP = "^0.19, ^0.20"
+JSON = "^0.21"
+MathOptInterface = "^0.9"
+SMTPClient = "^0.3"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
