@@ -9,6 +9,7 @@ import MathOptInterface
 import Random
 import SMTPClient
 
+
 struct SecretSantaModel
     model::JuMP.Model
     data::Dict{String, Any}
@@ -16,6 +17,7 @@ struct SecretSantaModel
     variables::Dict{Symbol, Any} # JuMP variable references.
     solution::Dict{String, Any} # Solution reference.
 end
+
 
 function SecretSantaModel(data::Dict{String, Any})
     # Create the set of the participants.
@@ -35,7 +37,7 @@ function SecretSantaModel(data::Dict{String, Any})
     A = Random.shuffle(A)
 
     # Create the JuMP model.
-    model = JuMP.Model(JuMP.with_optimizer(GLPK.Optimizer))
+    model = JuMP.Model(GLPK.Optimizer)
     variables = Dict{Symbol, Any}(:x => nothing)
     constraints = Dict{Symbol, Any}(:out_flow => nothing, :in_flow => nothing)
     constraints[:out_flow] = Dict{String, JuMP.ConstraintRef}()
@@ -59,10 +61,12 @@ function SecretSantaModel(data::Dict{String, Any})
     return ssm # Return the SecretSantaModel instance.
 end
 
+
 function build_model(input_path::String)
     data = JSON.parsefile(input_path)
     return SecretSantaModel(data)
 end
+
 
 function solve_model(ssm::SecretSantaModel)
     JuMP.optimize!(ssm.model)
@@ -74,6 +78,7 @@ function solve_model(ssm::SecretSantaModel)
         error("Secret Santa assignment is not possible. Adjust participants.")
     end
 end
+
 
 function send_email(ssm::SecretSantaModel, sender::Dict{String,Any}, recipient::Dict{String,Any}, test::Bool=true)
     # Prepare the subject of the email.
@@ -124,6 +129,7 @@ function send_email(ssm::SecretSantaModel, sender::Dict{String,Any}, recipient::
     end
 end
 
+
 function send_matchings(ssm::SecretSantaModel, solution::Array{Tuple{String, String}, 1}, test::Bool=true)
     participants = ssm.data["participants"]
 
@@ -134,10 +140,12 @@ function send_matchings(ssm::SecretSantaModel, solution::Array{Tuple{String, Str
     end
 end
 
+
 function run(input_path::String; test::Bool=true)
     ssm = build_model(input_path)
     solution = solve_model(ssm)
     send_matchings(ssm, solution, test)
 end
+
 
 end
