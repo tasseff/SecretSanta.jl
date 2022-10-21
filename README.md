@@ -19,7 +19,7 @@ First, email settings are controlled via the `email` block:
 }
 ```
 When using the email option, the package assumes the user has access to an SMTP email server.
-If using Gmail, you will need to [allow less secure apps to access your account](https://myaccount.google.com/lesssecureapps).
+If using Gmail, you will need to [create an app password](https://support.google.com/accounts/answer/185833?hl=en).
 Within this JSON block, `smtp_server` and `smtp_port` are the address and port of the SMTP server; `username` and `password` are the credentials for the corresponding email account; and `subject` and `message` define the email template that will be used when emailing participants.
 Here, `{recipient}` and `{recipient_email}` correspond to the giftee, and `{sender}` corresponds to the gifter.
 
