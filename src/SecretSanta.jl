@@ -1,6 +1,5 @@
 module SecretSanta
 
-import Combinatorics
 import Dates
 import HiGHS
 import JSON
@@ -27,7 +26,7 @@ function SecretSantaModel(data::Dict{String,Any})
 
     # Create arcs for a complete bipartite graph.
     exclude = vcat([[[x["email"], y] for y in x["exclude"]] for x in P]...)
-    A = collect(Combinatorics.combinations(N, 2)) # Collect arcs from i to j.
+    A = get_combinations(N) # Get arcs from i to j.
     A = vcat([reverse(a) for a in A], A) # Concatenate arcs from j to i.
     A = filter(x -> !(x in exclude), A) # Remove excluded arcs.
     A = [(a[1], a[2]) for a in A] # Convert to array of tuples.
@@ -65,6 +64,19 @@ end
 function build_model(input_path::String)
     data = JSON.parsefile(input_path)
     return SecretSantaModel(data)
+end
+
+
+function get_combinations(entries::Vector{String})::Vector{Vector{String}}
+    combinations = Vector{Vector{String}}()
+
+    for i in 1:length(entries)
+        for j in (i + 1):length(entries)
+            push!(combinations, [entries[i], entries[j]])
+        end
+    end
+
+    return combinations
 end
 
 
