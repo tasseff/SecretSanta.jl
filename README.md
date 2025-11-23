@@ -2,7 +2,8 @@
 SecretSanta.jl is a Julia package for generating Secret Santa matchings and emailing participants.
 
 ## Build status
-<a href="https://github.com/tasseff/SecretSanta.jl/actions?query=workflow%3AContinuous%20Integration"><img src="https://github.com/tasseff/SecretSanta.jl/workflows/Continuous%20Integration/badge.svg?branch=master" align="top" alt="Development Build Status"></a> <a href="https://codecov.io/gh/tasseff/SecretSanta.jl"><img align="top" src="https://codecov.io/gh/tasseff/SecretSanta.jl/branch/master/graph/badge.svg" alt="Code Coverage Status"></a>
+[![Continuous Integration](https://github.com/tasseff/SecretSanta.jl/actions/workflows/ContinuousIntegration.yml/badge.svg)](https://github.com/tasseff/SecretSanta.jl/actions/workflows/ContinuousIntegration.yml)
+[![codecov](https://codecov.io/gh/tasseff/SecretSanta.jl/branch/master/graph/badge.svg?token=yMK5vlPuxY)](https://codecov.io/gh/tasseff/SecretSanta.jl)
 
 ## Usage
 ### JSON Schema
