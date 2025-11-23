@@ -62,7 +62,7 @@ end
 
 
 function build_model(input_path::String)
-    data = JSON.parsefile(input_path)
+    data = JSON.parsefile(input_path; dicttype=Dict{String,Any})
     return SecretSantaModel(data)
 end
 
