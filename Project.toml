@@ -2,7 +2,7 @@ name = "SecretSanta"
 uuid = "bb3d3a65-b032-5cdd-a073-dfed7b606c01"
 authors = ["Byron Tasseff"]
 repo = "https://github.com/tasseff/SecretSanta.jl"
-version = "0.2.3"
+version = "0.2.4"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
@@ -15,7 +15,7 @@ SMTPClient = "c35d69d1-b747-5018-a192-25bc5e63c83d"
 [compat]
 Dates = "1.6 - 1"
 HiGHS = "~1"
-JSON = "~0.21"
+JSON = "~0.21, ~1"
 JuMP = "~0.22, ~0.23, ~1"
 Random = "1.6 - 1"
 SMTPClient = "~0.3, ~0.6"
